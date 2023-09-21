@@ -6,7 +6,7 @@ function MoviesCardList({ movies }) {
         <section className='movies-card-list'>
             <div className='movies-card-list__container'>
                 {movies.map((movie) =>
-                    <MoviesCard key={movie.movieId} movie={movie} />)}
+                    <MoviesCard key={movie.id} movie={movie} />)}
             </div>
         </section>
     );
