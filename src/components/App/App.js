@@ -129,11 +129,10 @@ function App() {
   const handleDeleteMovie = (movie) => {
     const id = movie.movieId || movie.id;
     mainApi
-      .deleteSavedMovie(id)
+      .deleteSavedMovie(movie._id)
       .then(() => {
         const updatedSavedMovies = savedMovies.filter(m => m.movieId !== id);
         setSavedMovies(updatedSavedMovies);
-        console.log(updatedSavedMovies);
       })
       .catch((err) => console.log(err));
   }

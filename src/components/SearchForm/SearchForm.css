@@ -32,6 +32,8 @@
   line-height: 33.89px;
   border: none;
   padding: 0;
+  width: 60%;
+  outline: 0;
 }
 
 .search__button {
@@ -46,8 +48,24 @@
   transition: opacity .3s ease-in-out;
 }
 
-.search__btn:hover {
+.search__button:hover {
   opacity: 0.8;
+}
+
+.search__span-container {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 17px;
+}
+
+.search__field-error {
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  color: #ff3055;
+  font-size: 13px;
+  line-height: normal;
 }
 
 @media screen and (max-width: 819px) {

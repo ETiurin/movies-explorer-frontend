@@ -1,26 +1,19 @@
-import React from "react";
+import { useFormWithValidation } from '../../utils/validate';
 import "./Login.css";
-import { useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export function Login({ handleLogin }) {
-  const [formValue, setFormValue] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  };
+export function Login({ handleLogin, error, setError }) {
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(formValue.email, formValue.password)
+    handleLogin(values.email, values.password);
+    resetForm();
   };
+
+  useEffect(() => setError(""), []);
 
   return (
     <section className="authorization-form">
@@ -35,10 +28,11 @@ export function Login({ handleLogin }) {
           minLength="2"
           maxLength="30"
           placeholder="email"
+          pattern="^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+){1,}\.([a-zA-Z]+)$"
           onChange={handleChange}
           required
         ></input>
-        <span className='authorization-form__input-error authorization-form__input-error_type_email'>Что-то пошло не так...</span>
+        <span className='authorization-form__input-error'>{error.email}</span>
         <label className="authorization-form__input-label">Пароль</label>
         <input
           type="password"
@@ -50,7 +44,8 @@ export function Login({ handleLogin }) {
           onChange={handleChange}
           required
         ></input>
-        <span className='authorization-form__input-error authorization-form__input-error_type_password'>Что-то пошло не так...</span>
+        <span className='authorization-form__input-error'>{error.password}</span>
+        <p className="authorization-form__err-text">{error}</p>
         <button type="submit" className="authorization-form__button">
           Войти
         </button>

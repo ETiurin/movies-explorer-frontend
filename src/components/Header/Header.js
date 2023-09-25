@@ -4,9 +4,7 @@ import './Header.css';
 import Navigation from "../Navigation/Navigation";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
-function Header() {
-
-  const [loggedIn, setLoggedIn] = useState(true);
+function Header({ loggedIn }) {
 
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 

@@ -40,9 +40,9 @@ function Movies({
         setIsLoading(true);
         setIsSearchSuccess(false);
         setTimeout(() => {
-            const results = movies.filter((movie) =>
-                movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase())
-            );
+            const results = movies.filter((movie) => {
+              return movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase())
+            });
             setSearchResults(results);
             localStorage.setItem("searchResults", JSON.stringify(results));
             setIsSearchSuccess(results.length > 0);
