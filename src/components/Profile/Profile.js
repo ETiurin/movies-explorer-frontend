@@ -16,12 +16,11 @@ export function Profile({ loggedIn, onEditProfile, signOut, error }) {
   useEffect(() => {
     setValues((values) => ({
       ...values,
-      name: currentUser.name,
-      email: currentUser.email
+      name: currentUser.data.name,
+      email: currentUser.data.email
     }));
   }, [currentUser, setValues]);
 
-  //разблокировка полей ввода
   function handleEditButton() {
     setIsDisabledInput(false);
   }

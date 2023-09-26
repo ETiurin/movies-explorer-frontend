@@ -16,9 +16,9 @@ function Movies({
     onMovieSave,
     onMovieDelete,
 }) {
-    const [searchQuery, setSearchQuery] = useState(() => localStorage.getItem("searchQuery") || ""); // текст запроса
-    const [searchResults, setSearchResults] = useState(JSON.parse(localStorage.getItem("searchResults")) || []); //результаты поиска
-    const [searchResultsFiltered, setSearchResultsFiltered] = useState([]); // рез-ты поиска с учетом фильтрации по короткометражкам
+    const [searchQuery, setSearchQuery] = useState(() => localStorage.getItem("searchQuery") || "");
+    const [searchResults, setSearchResults] = useState(JSON.parse(localStorage.getItem("searchResults")) || []);
+    const [searchResultsFiltered, setSearchResultsFiltered] = useState([]);
 
     const [isLoading, setIsLoading] = useState(false);
     const [isSearchSuccess, setIsSearchSuccess] = useState(true);
@@ -29,7 +29,6 @@ function Movies({
     const [isNumberToAddMovies, setIsNumberToAddMovies] = useState(3);
     const [isMoreBtnShown, setIsMoreBtnShown] = useState(true);
 
-    //поиск фильмов
     const handleSearchQueryChange = (event) => {
         const query = event.target.value;
         setSearchQuery(query);
@@ -50,13 +49,11 @@ function Movies({
         }, 2000);
     };
 
-    //переключение фильтрации для movies
     const handleChecked = () => {
         setIsChecked(!isChecked);
         localStorage.setItem("checkboxState", JSON.stringify(!isChecked));
     }
 
-    //настройка фильтра отображения короткометражек для movies
     useEffect(() => {
         if (isChecked) {
             setSearchResultsFiltered(searchResults.filter((movie) => movie.duration <= shortMoviesDuration));
@@ -65,7 +62,6 @@ function Movies({
         }
     }, [searchResults, isChecked]);
 
-    //установка кол-ва отображаемых карточек на странице
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth > 805) {
@@ -91,7 +87,6 @@ function Movies({
         };
     }, []);
 
-    //кнопка "показать ещё"
     const handleChangeMoreBtn = () => {
         if (searchResults.length > isNumberOfMoviesShown) {
             setIsMoreBtnShown(true);
@@ -106,7 +101,6 @@ function Movies({
 
     const displayedMovies = searchResultsFiltered.slice(0, isNumberOfMoviesShown);
 
-    //настройка скрытия кнопки "Ещё"
     useEffect(() => {
         handleChangeMoreBtn();
     }, [loadMore, handleSearch]);

@@ -141,7 +141,7 @@ function App() {
     return mainApi
       .editProfile(data)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser({ data: res});
         setStatusInfoTooltip(true);
       })
       .catch((err) => {
