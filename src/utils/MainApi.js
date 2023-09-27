@@ -62,7 +62,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: "http://localhost:1235",
+  baseUrl: "https://ETiurin.nomoredomainsicu.ru",
   headers: {
     "content-type": "application/json",
   },
