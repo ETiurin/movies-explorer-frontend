@@ -14,7 +14,7 @@
 
 **Ссылки на GitHub**
 
-* [Frontend](https://github.com/ETiurin/movies-explorer-frontend.git)
+* [Frontend](https://github.com/ETiurin/movies-explorer-frontend/tree/level-3)
 
 * [Backend](https://github.com/ETiurin/movies-explorer-api.git)
 
