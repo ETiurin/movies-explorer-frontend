@@ -11,13 +11,12 @@
   display: grid;
   row-gap: 30px;
   column-gap: 24px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(auto-fill, minmax(271px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
 }
 
 @media screen and (max-width: 1279px) {
   .movies-card-list__container {
-    grid-template-columns: repeat(2, 364px);
+    grid-template-columns: repeat(3, 1f);
     justify-content: space-between;
   }
 }
@@ -45,8 +44,7 @@
   }
 
   .movies-card-list__container {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: repeat(1, 1fr);
     gap: 16px;
   }
 }

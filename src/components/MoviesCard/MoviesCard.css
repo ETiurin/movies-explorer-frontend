@@ -62,10 +62,6 @@
   background-image: url(../../images/save_button.svg);
 }
 
-.movie__button_type_save:hover {
-  background-image: url(../../images/save_button_active.svg);
-}
-
 .movie__button_type_save:active {
   background-image: url(../../images/save_button_active.svg);
 }
