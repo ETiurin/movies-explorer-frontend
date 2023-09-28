@@ -1,4 +1,4 @@
-export const BASE_URL = "https://ETiurin.nomoredomainsicu.ru";
+export const BASE_URL = "https://api.ETiurin.nomoredomainsicu.ru";
 
 export const register = (data) => {
   return fetch(`${BASE_URL}/signup`, {
