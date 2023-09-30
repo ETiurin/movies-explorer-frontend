@@ -2,7 +2,6 @@ export const BASE_URL = "https://api.ETiurin.nomoredomainsicu.ru";
 
 export const register = (data) => {
   return fetch(`${BASE_URL}/signup`, {
-    credentials: "include",
     method: "POST",
     headers: {
       "content-type": "application/json",
