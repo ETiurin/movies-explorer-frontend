@@ -1,4 +1,5 @@
 import { useFormWithValidation } from '../../utils/validate';
+i
 import "./Login.css";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -10,10 +11,15 @@ export function Login({ handleLogin, error, setError }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(values.email, values.password);
-    resetForm();
   };
 
-  useEffect(() => setError(""), []);
+  useEffect(() => {
+	  setError("");
+
+	  return () => {
+		  resetForm();
+	  }
+}, []);
 
   return (
     <section className="authorization-form">
