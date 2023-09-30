@@ -2,7 +2,7 @@
 
 ### Выполнил: Тюрин Е.Н.
 
-* [Ссылка на Pull request](https://github.com/ETiurin/movies-explorer-frontend/pull/4)
+* [Ссылка на Pull request](https://github.com/ETiurin/movies-explorer-frontend/pull/5)
 
 ### Дипломная работа "Movies-explorer-frontend" в рамках курса Вэб-разработчик от Яндекс.Практикума.
 
