@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export function Login({ handleLogin, error, setError }) {
-  const { values, handleChange, errors, resetForm } =
+  const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
   const handleSubmit = (e) => {
@@ -51,7 +51,7 @@ export function Login({ handleLogin, error, setError }) {
         ></input>
         <span className='authorization-form__input-error'>{errors.password}</span>
         <p className="authorization-form__err-text">{error}</p>
-        <button type="submit" className="authorization-form__button">
+        <button type="submit" className="authorization-form__button" disabled={!isValid}>
           Войти
         </button>
         <p className="authorization-form__link-text">Ещё не зарегистрированы? <Link className="authorization-form__link" to="/signup">Регистрация</Link></p>
