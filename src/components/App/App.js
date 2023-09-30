@@ -56,7 +56,7 @@ function App() {
 
   const handleRegister = (name, email, password) => {
     return auth
-      .register(name, email, password)
+      .register({ name, email, password })
       .then(() => {
         handleLogin(email, password);
       })

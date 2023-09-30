@@ -4,16 +4,21 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export function Login({ handleLogin, error, setError }) {
-  const { values, handleChange, errors, isValid, resetForm } =
+  const { values, handleChange, errors, resetForm } =
     useFormWithValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(values.email, values.password);
-    resetForm();
   };
 
-  useEffect(() => setError(""), []);
+  useEffect(() => {
+    setError("");
+
+    return () => {
+      resetForm();
+    }
+  }, []);
 
   return (
     <section className="authorization-form">
@@ -32,7 +37,7 @@ export function Login({ handleLogin, error, setError }) {
           onChange={handleChange}
           required
         ></input>
-        <span className='authorization-form__input-error'>{error.email}</span>
+        <span className='authorization-form__input-error'>{errors.email}</span>
         <label className="authorization-form__input-label">Пароль</label>
         <input
           type="password"
@@ -44,7 +49,7 @@ export function Login({ handleLogin, error, setError }) {
           onChange={handleChange}
           required
         ></input>
-        <span className='authorization-form__input-error'>{error.password}</span>
+        <span className='authorization-form__input-error'>{errors.password}</span>
         <p className="authorization-form__err-text">{error}</p>
         <button type="submit" className="authorization-form__button">
           Войти

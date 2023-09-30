@@ -10,10 +10,15 @@ export function Register({ handleRegister, error, setError }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleRegister(values.name, values.email, values.password);
-    resetForm();
   };
 
-  useEffect(() => setError(""), []);
+  useEffect(() => {
+    setError("");
+
+    return () => {
+      resetForm();
+    }
+  }, []);
 
   return (
     <section className="main">
