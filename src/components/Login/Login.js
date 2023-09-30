@@ -11,15 +11,10 @@ export function Login({ handleLogin, error, setError }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(values.email, values.password);
+	resetForm();
   };
 
-  useEffect(() => {
-	  setError("");
-
-	  return () => {
-		  resetForm();
-	  }
-}, []);
+  useEffect(() => setError(""), []);
 
   return (
     <section className="authorization-form">
