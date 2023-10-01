@@ -1,37 +1,34 @@
+
 import './AboutProject.css';
 
 function AboutProject() {
   return (
-    <section className='about-project' title='about-project'>
-      <div className='about-project__heading'>
-        <h2 className='about-project__heading-title'>О проекте</h2>
-      </div>
-      <div className='about-project__items'>
-        <div className='about-project__item'>
-          <h3 className='about-project__item-title'>Дипломный проект включал 5 этапов</h3>
-          <p className='about-project__item-description'>Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
-        </div>
-        <div className='about-project__item'>
-          <h3 className='about-project__item-title'>На выполнение диплома ушло 5 недель</h3>
-          <p className='about-project__item-description'>У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
-        </div>
-      </div>
-      <div className='about-project__grid-container'>
-        <div className='about-project__grid'>
-          <div className='about-project-title about-project-title_type_green'>
-            <p className='about-project__grid-title'>1 неделя</p>
+    <section className="about" id="about-project">
+      <div className="container">
+        <h2 className='about__text-title'>О проекте</h2>
+        <div className="about__text-container">
+          <div className="about__text">
+            <h3 className="about__text-title">Дипломный проект включал 5 этапов</h3>
+            <p className="about__text-subtitle">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
           </div>
-          <p className='about-project__grid-subject'>Back-end</p>
-        </div>
-        <div className='about-project__grid'>
-          <div className='about-project-title about-project-title_type_transparent'>
-            <p className='about-project__grid-title'>4 недели</p>
+          <div className="about__text">
+            <h3 className="about__text-title">На выполнение диплома ушло 5 недель</h3>
+            <p className="about__text-subtitle">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
           </div>
-          <p className='about-project__grid-subject'>Front-end</p>
+        </div>
+        <div className="about__scale-container">
+          <div className="about__scale about__scale_small">
+            <p className="about__scale-title about__scale-title_color_black">1 неделя</p>
+            <p className="about__scale-caption">Back-end</p>
+          </div>
+          <div className="about__scale">
+            <p className="about__scale-title">4 недели</p>
+            <p className="about__scale-caption">Front-end</p>
+          </div>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 export default AboutProject;

@@ -1,185 +1,145 @@
-.about-project {
-  max-width: calc(100% - 70px * 2);
-  margin: 0 auto;
+
+.about {
+  padding: 110px 0;
 }
 
-.about-project__heading {
-  margin: 110px 0 70px;
-  border-bottom: 1px solid black;
+.about__text-container {
+  margin: 70px 0 0;
+  display: flex;
+  column-gap: 52px;
 }
 
-.about-project__heading-title {
-  font-size: 22px;
-  line-height: 26.63px;
+.about__text-title {
+  margin: 0 0 26px;
   font-weight: 400;
-  letter-spacing: -0.04px;
-  padding-bottom: 23px;
-  margin: 0;
-}
-
-.about-project__items {
-  display: flex;
-  column-gap: 55px;
-  padding-bottom: 110px;
-}
-
-.about-project__grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding-bottom: 110px;
-}
-
-.about-project__item {
-  display: flex;
-  flex-direction: column;
-}
-
-.about-project__item-title {
   font-size: 20px;
-  line-height: 24.2px;
-  font-weight: 400;
-  letter-spacing: -0.4px;
-  padding-bottom: 26px;
-  margin: 0;
+  line-height: 24px;
+  letter-spacing: -0.04em;
 }
 
-.about-project__item-description {
+.about__text-subtitle {
+  margin: 0;
+  font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  margin: 0;
 }
 
-.about-project__grid {
-  max-width: 228px;
-  min-height: 76px;
+.about__scale-container {
+  margin: 110px 0 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.about__scale {
+  width: 100%;
+  min-width: 184px;
+  display: flex;
   flex-direction: column;
+  row-gap: 14px;
 }
 
-.about-project-title {
-  width: 228px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 19px;
+.about__scale_small {
+  width: 30%;
+  max-width: 228px;
+  min-width: 100px;
 }
 
-.about-project-title_type_green {
+.about__scale-title {
+  margin: 0;
+  padding: 9px 0 10px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  background-color: #f2f2f2;
+}
+
+.about__scale-title_color_black {
+  color: #000;
   background-color: #2be080;
 }
 
-.about-project__grid-title {
-  font-size: 14px;
-  line-height: 16.94px;
+.about__scale-caption {
   margin: 0;
-}
-
-.about-project__grid-subject {
-  color: #a0a0a0;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  margin: 0;
-  padding-bottom: 5px;
+  text-align: center;
+  color: #a0a0a0;
 }
 
-@media screen and (max-width: 819px) {
-  .about-project {
-    max-width: calc(100% - 50px * 2);
+@media screen and (max-width: 768px) {
+  .about {
+    padding: 90px 20px;
+  }
+  
+  .about__text-container  {
+    gap: 38px;
   }
 
-  .about-project__heading {
-    margin: 90px 0 70px;
+  .about__text-title {
+    margin: 0 0 22px;
   }
 
-  .about-project__item-title {
-    padding-bottom: 22px;
-  }
-
-  .about-project__item-description {
+  .about__text-subtitle {
     font-size: 12px;
     line-height: 18px;
   }
 
-  .about-project__grid {
-    max-width: 140px;
-    min-height: 67px;
+  .about__scale-container  {
+    margin: 93px 0 0;
   }
 
-  .about-project-title {
-    width: 140px;
-    margin-bottom: 15px;
+  .about__scale_small  {
+    width: 26.8%;
   }
 
-  .about-project__grid-subject {
+  .about__scale-caption  {
     font-weight: 400;
   }
-
-  .about-project__items {
-    column-gap: 35px;
-    padding-bottom: 95px;
-  }
-
-  .about-project__grid-container {
-    padding-bottom: 85px;
-  }
-
 }
 
 @media screen and (max-width: 460px) {
-  .about-project {
-    max-width: calc(100% - 18px * 2);
+  .about {
+    padding: 70px 4px;
   }
 
-  .about-project__heading {
-    margin: 70px 0 60px;
-  }
-
-  .about-project__heading-title {
-    font-size: 18px;
-    padding-bottom: 28px;
-  }
-
-  .about-project__items {
+  .about__text-container  {
+    margin: 60px 0 0;
     flex-direction: column;
     gap: 56px;
-    padding-bottom: 58px;
   }
 
-  .about-project__item-title {
-    padding-bottom: 19px;
+  .about__text-title {
+    margin: 0 0 16px;
     font-size: 18px;
-    line-height: 21.78px;
+    line-height: 22px;
   }
 
-  .about-project__item-description {
+  .about__text-subtitle {
     font-size: 11px;
-    line-height: 1.45;
+    line-height: 16px;
   }
 
-  .about-project__grid {
-    max-width: 100px;
-    min-height: 67px;
+  .about__scale-container  {
+    margin: 60px 0 0;
   }
 
-  .about-project-title {
-    width: 100px;
-    margin-bottom: 9px;
+  .about__scale {
+    row-gap: 10px;
   }
 
-  .about-project__grid-subject {
+  .about__scale-title {
+    padding: 11px 0 10px;
     font-size: 11px;
-    line-height: 13.31px;
+    line-height: 13px;
   }
 
-  .about-project__grid-title {
+  .about__scale_small  {
+    width: 26.8%;
+  }
+
+  .about__scale-caption  {
     font-size: 11px;
-  }
-
-  .about-project__grid-container {
-    padding-bottom: 62px;
+    line-height: 13px;
   }
 }

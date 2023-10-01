@@ -1,99 +1,120 @@
 .about-me {
-  max-width: calc(100% - 70px * 2);
-  margin: 0 auto;
-}
-
-.about-me__header {
-  margin: 110px 0 66px;
-  border-bottom: 1px solid black;
+  padding: 111px 0 125px;
 }
 
 .about-me__heading {
-  font-weight: 400;
+  border-bottom: 1px solid #000;
   font-size: 22px;
-  line-height: 26.63px;
-  letter-spacing: -0.44px;
-  padding-bottom: 23px;
-  margin: 0;
-}
-
-.about-me__block {
-  max-height: 327px;
-  display: grid;
-  grid-template-columns: 1fr 270px;
-  grid-template-rows: 58px 20px 150px 1fr;
-  gap: 18px;
-  grid-template-areas:
-    "name avatar"
-    "about avatar"
-    "description avatar"
-    "link avatar";
-}
-
-.about-me__name {
-  grid-area: name;
-  font-size: 50px;
-  line-height: 58px;
   font-weight: 400;
-  letter-spacing: -0.04px;
+  letter-spacing: -.04em;
+  line-height: 27px;
   margin: 0;
+  padding: 0 0 23px;
+}
+
+.about-me__info-wrapper {
+  margin: 66px 0 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
 }
 
 .about-me__info {
-  grid-area: about;
-  font-size: 18px;
-  line-height: 20px;
-  font-weight: 500;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-me__name {
   margin: 0;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
 }
 
 .about-me__description {
-  grid-area: description;
+  margin: 18px 0 0;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.about-me__bio {
+  margin: 26px 0 0;
+  font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  max-width: 600px;
-  margin: 0;
-  padding-top: 8px;
 }
 
-.about-me__link-github {
-  grid-area: link;
-  font-size: 14px;
-  line-height: 16.94px;
-  font-weight: 500;
-  margin: 0;
-  align-self: flex-end;
+.about-me__github {
+  margin: 99px 0 0;
   text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
   color: #000;
-  cursor: pointer;
-  transition: opacity 0.3s ease-in-out;
 }
 
-.about-me__link-github:hover {
-  opacity: 0.7;
-}
-
-.about-me__avatar {
-  grid-area: avatar;
-  max-width: 270px;
-  min-height: 327px;
+.about-me__photo {
+  width: 270px;
+  height: 327px;
   border-radius: 10px;
 }
 
-@media screen and (max-width: 819px) {
+.about-me__portfolio {
+  margin: 100px 0 0;
+}
+
+.about-me__portfolio-title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: #a0a0a0;
+}
+
+.about-me__portfolio-links {
+  margin: 50px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  list-style: none;
+}
+
+.about-me__portfolio-item {
+  padding: 0 0 20px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.about-me__portfolio-item:last-child {
+  padding: 0;
+  border-bottom: none;
+}
+
+.about-me__portfolio-link {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 50px;
+  letter-spacing: -0.04em;
+  color: #000;
+}
+
+.about-me__portfolio-link::after {
+  content: "";
+  width: 29px;
+  background: url(../../images/text__COLOR_font-main.svg) no-repeat;
+  background-position: top 19px center;
+}
+
+@media screen and (max-width: 767px) {
   .about-me {
-    max-width: calc(100% - 50px * 2);
-  }
-
-  .about-me__header {
-    margin: 90px 0 66px;
-  }
-
-  .about-me__block {
-    max-height: 307px;
-    grid-template-columns: 1fr 255px;
-    grid-template-rows: 40px 20px 150px 1fr;
-    gap: 16px;
+    padding: 90px 20px;
   }
 
   .about-me__name {
@@ -101,79 +122,105 @@
     line-height: 40px;
   }
 
-  .about-me__info {
-    font-size: 12px;
-    line-height: 18px;
-  }
-
   .about-me__description {
-    max-width: 364px;
+    margin: 16px 0 0;
     font-size: 12px;
     line-height: 18px;
-    padding-top: 0;
   }
 
-  .about-me__avatar {
-    max-width: 100%;
-    min-height: 307px;
+  .about-me__info-wrapper {
+    margin: 60px 0 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 39px;
+  }
+
+  .about-me__bio {
+    margin: 20px 0 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+    .about-me__github {
+      margin: 87px 0 0;
+    }
+
+    .about-me__photo {
+      width: 255px;
+      height: 307px;
+    }
+
+    .about-me__portfolio {
+      margin: 90px 0 0;
+    }
+
+    .about-me__portfolio-link {
+      font-size: 28px;
+      line-height: 50px;
+    }
+
+    .about-me__photo {
+      width: 292px;
+      height: 352px;
+      order: -1;
+    }
+  }
+
+@media screen and (max-width: 550px) {
+  .about-me__portfolio {
+    margin: 70px 0 0;
+  }
+
+  .about-me__portfolio-title {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .about-me__portfolio-links {
+    margin: 40px 0 0;
+  }
+
+  .about-me__portfolio-link {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .about-me__portfolio-link::after {
+    width: 18px;
+    background-position: center;
+    background-size: 12px;
   }
 }
 
 @media screen and (max-width: 460px) {
   .about-me {
-    max-width: calc(100% - 14px * 2);
-  }
-
-  .about-me__header {
-    margin: 50px 0 60px;
+    padding: 71px 0px;
   }
 
   .about-me__heading {
     font-size: 18px;
-    line-height: 21.78px;
-    padding-bottom: 28px;
-  }
-
-  .about-me__block {
-    display: flex;
-    flex-direction: column;
-    max-height: 100%;
-    gap: 20px;
+    line-height: 22px;
+    padding: 0 0 28px;
   }
 
   .about-me__name {
     font-size: 30px;
-    line-height: 36.31px;
-    padding: 25px 0 0;
-  }
-
-  .about-me__info {
-    font-size: 11px;
-    line-height: 16px;
-    padding: 3px 0;
+    line-height: 36px;
   }
 
   .about-me__description {
-    max-width: 100%;
+    margin: 19px 0 0;
     font-size: 11px;
     line-height: 16px;
-    padding-bottom: 18px;
   }
 
-  .about-me__avatar {
-    max-width: 292px;
-    margin: 0 auto;
-    min-height: 352px;
+  .about-me__bio {
+    margin: 21px 0 0;
+    font-size: 11px;
+    line-height: 16px;
   }
 
-  .about-me__link-github {
-    align-self: flex-start;
-  }
-}
-
-@media screen and (max-width: 359px) {
-
-  .about-me__avatar {
-    max-width: 100%;
+  .about-me__github {
+    margin: 40px 0 0;
   }
 }

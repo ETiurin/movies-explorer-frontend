@@ -1,11 +1,14 @@
 .header {
-  max-width: calc(100% - 70px * 2);
   margin: 0 auto;
   min-height: 74px;
   display: grid;
   grid-template-columns: 38px 1fr;
   gap: 44px;
   align-items: center;
+  box-sizing: border-box;
+  max-width: 1280px;
+  padding: 0 70px;
+  width: 100%;
 }
 
 .header__logo-link {
@@ -60,9 +63,9 @@
   align-items: center;
 }
 
-@media screen and (max-width: 805px) {
+@media screen and (max-width: 768px) {
   .header {
-    max-width: calc(100% - 30px * 2);
+    padding: 0 30px;
   }
 
   .header__main {
@@ -70,9 +73,9 @@
   }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 460px) {
   .header {
-    max-width: calc(100% - 14px * 2);
+    padding: 0 14px;
   }
 
   .header__main {

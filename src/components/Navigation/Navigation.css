@@ -93,7 +93,9 @@
 }
 
 .navigation__profile-logo_white {
-  background-image: url(../../images/icon__COLOR_font-white.svg);
+  background-image: url(../../images/profile-icon.svg);
+  background-color: #2BE080;
+  border-radius: 4px;
 }
 
 .navigation__item_hidden {

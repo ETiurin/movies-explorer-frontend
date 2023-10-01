@@ -1,11 +1,7 @@
 import { useState, useCallback } from "react";
 
 export function useFormWithValidation() {
-  const [values, setValues] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
+  const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
@@ -13,10 +9,19 @@ export function useFormWithValidation() {
     const target = event.target;
     const name = target.name;
     const value = target.value;
+
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());
-  };
+
+    if (name === 'password') {
+      if (!target.checkValidity()) {
+        setErrors({ ...errors, [name]: 'Минимальная длина пароля: 6 символов' });
+      } else {
+        setErrors({ ...errors, [name]: '' });
+      }
+    }
+  }
 
   const resetForm = useCallback(
     (newValues = {}, newErrors = {}, newIsValid = false) => {

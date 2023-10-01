@@ -1,5 +1,5 @@
 import './Movies.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import MoreButton from '../MoreButton/MoreButton';
@@ -35,6 +35,7 @@ function Movies({
         localStorage.setItem("searchQuery", query);
     };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleSearch() {
         setIsLoading(true);
         setIsSearchSuccess(false);
@@ -87,6 +88,7 @@ function Movies({
         };
     }, []);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleChangeMoreBtn = () => {
         if (searchResults.length > isNumberOfMoviesShown) {
             setIsMoreBtnShown(true);
@@ -95,15 +97,16 @@ function Movies({
         }
     };
 
-    const loadMore = () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const loadMore = useCallback(() => {
         setIsNumberOfMoviesShown(isNumberOfMoviesShown + isNumberToAddMovies);
-    };
+    });
 
     const displayedMovies = searchResultsFiltered.slice(0, isNumberOfMoviesShown);
 
     useEffect(() => {
         handleChangeMoreBtn();
-    }, [loadMore, handleSearch]);
+    }, [loadMore, handleSearch, handleChangeMoreBtn]);
 
     return (
         <>
