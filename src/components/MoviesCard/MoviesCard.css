@@ -1,5 +1,6 @@
 .card {
-  max-width: 285px;
+  min-width: 203px;
+  height: 218px;
   display: flex;
   flex-direction: column;
   background: #fdfdfd;
@@ -35,9 +36,9 @@
 }
 
 .card__poster {
-  width: 364px;
-  height: 203px;
-  object-fit: cover;
+  width: 267px;
+  height: 150px;
+  object-fit: fill;
   transition: all .2s ease-in-out;
 }
 
@@ -62,31 +63,32 @@
 .card__btn_type_save-active {
   background-color: #2be080;
   background-image: url(../../images/save_button_active.svg);
+}
 
-  .card__btn_type_delete {
-    background-image: url(../../images/delete-button.svg);
+.card__btn_type_delete {
+  background-image: url(../../images/delete-button.svg);
+}
+
+@media screen and (max-width: 767px) {
+  .card {
+    max-width: 339px;
+    height: 258px;
   }
 
-  @media screen and (max-width: 767px) {
-    .card {
-      max-width: 339px;
-    }
+  .card__poster {
+    width: 339px;
+    height: 190px;
+  }
+}
 
-    .card__poster {
-      width: 339px;
-      height: 190px;
-    }
+@media screen and (max-width: 550px) {
+  .card {
+    width: 300px;
+    height: 236px;
   }
 
-  @media screen and (max-width: 550px) {
-    .card {
-      width: 300px;
-      height: 236px;
-    }
-
-    .card__poster {
-      width: 300px;
-      height: 168px;
-    }
+  .card__poster {
+    width: 300px;
+    height: 168px;
   }
 }

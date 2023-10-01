@@ -29,7 +29,7 @@ function Movies({ movies, savedMovies, onSaveMovie, onEmptyReqMessage }) {
     }
   }, [foundMovies]);
 
-  const moviesFilter = (req) => {
+  const handleFilterMovie = (req) => {
     if (!filteredMovies.length) {
       setIsLoading(true);
     }
@@ -37,14 +37,14 @@ function Movies({ movies, savedMovies, onSaveMovie, onEmptyReqMessage }) {
     let filtered = [];
     localStorage.setItem('foundReqMovies', JSON.stringify(req));
 
-    if (req.isShortFilm) {
+    if (req.isShortFilm && !!req.searchValue) {
       filtered = movies.filter(m => {
         return m.duration <= 40 && m.nameRU.toLowerCase().trim().includes(req.searchValue.toLowerCase());
       });
 
       localStorage.setItem('foundMovies', JSON.stringify(filtered));
       setFilteredMovies(filtered);
-    } else if (!req.isShortFilm) {
+    } else if (!req.isShortFilm && !!req.searchValue) {
       filtered = movies.filter(m => {
         return m.nameRU.toLowerCase().trim().includes(req.searchValue.toLowerCase());
       });
@@ -60,7 +60,7 @@ function Movies({ movies, savedMovies, onSaveMovie, onEmptyReqMessage }) {
       <div className={`container ${size.width <= 550 ? "container_movies-mobile" : ""}`}>
         <SearchForm
           searchReq={searchReq}
-          onMoviesFilter={moviesFilter}
+          onMoviesFilter={handleFilterMovie}
           onEmptyReqMessage={onEmptyReqMessage} />
         {isLoading
           ?

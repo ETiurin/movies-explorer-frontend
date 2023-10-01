@@ -75,7 +75,7 @@ function SearchForm({ searchReq, onMoviesFilter, onEmptyReqMessage }) {
           aria-label="Найти" />
       </form>
       <FilterCheckbox
-        isChecked={searchReq.isShortFilm}
+        isChecked={isShortFilm}
         onCheckbox={checkFilterCheckbox} />
     </section>
   )

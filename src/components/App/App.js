@@ -30,7 +30,7 @@ function App() {
     url: 'https://api.ETiurin.nomoredomainsicu.ru',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      authorization: `${localStorage.getItem('jwt')}`,
     },
   });
 
@@ -38,7 +38,7 @@ function App() {
   const [ isMessageOpen, setIsMessageOpen ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState('');
   const [ textMessage, setTextMessage ] = useState('');
-  const [ isSucces, setIsSucces ] = useState(false);
+  const [ isSuccess, setIsSuccess ] = useState(false);
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [ currentUser, setCurrentUser ] = useState({});
   const [ isEditClicked, setIsEditClicked ] = useState(false);
@@ -66,7 +66,7 @@ function App() {
     isLoggedIn &&
       Promise.all([mainApi.getProfileInfo(), mainApi.getSavedMovies()])
         .then(([user, movies]) => {
-          setCurrentUser(user);
+          setCurrentUser(user.data);
 
           setSavedMovies(movies);
           localStorage.setItem('savedMovies', JSON.stringify(movies));
@@ -127,7 +127,7 @@ function App() {
   }
 
   const handleEmptyReqMessage = () => {
-    setIsSucces(false);
+    setIsSuccess(false);
     setIsMessageOpen(true);
     setErrorMessage('Нужно ввести ключевое слово.');
   }
@@ -137,11 +137,11 @@ function App() {
       .then(() => {
         handleLogin(email, password);
 
-        setIsSucces(true);
+        setIsSuccess(true);
         setIsMessageOpen(true);
       })
       .catch(err => {
-        setIsSucces(false);
+        setIsSuccess(false);
         setIsMessageOpen(true);
         handleError(err);
         console.log(err)
@@ -156,13 +156,13 @@ function App() {
           setIsLoggedIn(true);
           navigate('/movies', {replace: true});
 
-          setIsSucces(true);
+          setIsSuccess(true);
           setIsMessageOpen(true);
           setTextMessage('Вы успешно вошли!');
         }
       })
       .catch(err => {
-        setIsSucces(false);
+        setIsSuccess(false);
         setIsMessageOpen(true);
         handleError(err);
         console.log(err);
@@ -174,7 +174,7 @@ function App() {
       .then(() => {
         setCurrentUser({...currentUser, name, email});
 
-        setIsSucces(true);
+        setIsSuccess(true);
         setIsMessageOpen(true);
         setTextMessage('Профиль успешно обновлен!');
       })
@@ -183,7 +183,7 @@ function App() {
         setReadOnly(true);
       })
       .catch(err => {
-        setIsSucces(false);
+        setIsSuccess(false);
         setIsMessageOpen(true);
         handleError(err);
         console.log(err);
@@ -205,7 +205,7 @@ function App() {
     localStorage.clear();
     navigate('/', { replace: true });
 
-    setIsSucces(true);
+    setIsSuccess(true);
     setIsMessageOpen(true);
     setTextMessage('Вы вышли из аккаунта.');
   }
@@ -316,7 +316,7 @@ function App() {
 
       <Message
         isOpen={isMessageOpen}
-        isSucces={isSucces}
+        isSuccess={isSuccess}
         text={textMessage}
         errorText={errorMessage}
         onClose={handleCloseMessage} />
