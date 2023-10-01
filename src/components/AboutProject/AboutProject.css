@@ -67,11 +67,11 @@
   color: #a0a0a0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .about {
     padding: 90px 20px;
   }
-  
+
   .about__text-container  {
     gap: 38px;
   }

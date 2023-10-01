@@ -1,63 +1,51 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+
+import durationConverter from '../../utils/durationConverter';
+
 import './MoviesCard.css';
-import { movieURL } from '../../utils/constants';
+import '../App/App.css';
 
-function MoviesCard({ movie, savedMovie, onMovieSave, onMovieDelete }) {
-  const location = useLocation();
-  const movieDuration = (min) => {
-    const m = min % 60;
-    const h = Math.floor(min / 60);
-    const duration = `${h > 0 ? h + "ч" : ""} ${m > 0 ? m + "м" : ""}`;
-    return duration.trim();
-  };
+function MoviesCard({ movie, savedMovies, onSaveMovie, onDeleteMovie }) {
+  const savedMovie = savedMovies
+    ? savedMovies.find((m) => m.movieId === movie.id)
+    : '';
 
-  const isSaved = savedMovie.some(m => m.movieId === movie.id);
+  const isSaved = savedMovies
+    ? savedMovies.some((m) => m.movieId === movie.id)
+    : false;
 
-  function activeMovieSave() {
-    if (!isSaved) {
-      onMovieSave(
-        {
-          country: movie.country,
-          director: movie.director,
-          duration: movie.duration,
-          year: movie.year,
-          description: movie.description,
-          image: `${movieURL}${movie.image.url}`,
-          trailerLink: movie.trailerLink,
-          thumbnail: `${movieURL}${movie.image.formats.thumbnail.url}`,
-          movieId: movie.id,
-          nameRU: movie.nameRU,
-          nameEN: movie.nameEN,
-        }
-      );
-    } else if (isSaved) {
-      onMovieDelete(movie);
-    }
-  }
+  const imagePath = movie.image.url
+    ? `https://api.nomoreparties.co/${movie.image.url}`
+    : movie.image
+
+  let location = useLocation();
 
   return (
-    <div className='movie'>
-      <div className='movie__header'>
-        <div className='movie__description'>
-          <h2 className='movie__title'>{movie.nameRU}</h2>
-          <p className='movie__duration'>{movieDuration(movie.duration)}</p>
+    <li className="card">
+      <div className="card__info-wrapper">
+        <div className="card__info">
+          <h2 className="card__title">{movie.nameRU}</h2>
+          <span className="card__duration">{durationConverter(movie.duration)}</span>
         </div>
-        {location.pathname === "/movies" &&
-          <button type="button"
-            className={`movie__button movie__button_type_save ${isSaved ? 'movie__button_type_save_active' : 'movie__button_type_save'}`}
-            onClick={activeMovieSave}>
-          </button>}
-        {location.pathname === "/saved-movies" &&
-          <button type="button"
-            className="movie__button movie__button_type_delete"
-            onClick={() => onMovieDelete(movie)}>
-          </button>}
+        {location.pathname === '/movies'
+          ? <button
+              className={`card__btn card__btn_type_save ${isSaved ? "card__btn_type_save-active" : ""} hover-opacity-btn`}
+              type="button"
+              name="save-movie"
+              aria-label="Добавить в избранное"
+              onClick={() => onSaveMovie(movie, savedMovie?._id, isSaved)} />
+          : <button
+              className="card__btn card__btn_type_delete hover-opacity-btn"
+              type="button"
+              name="delete-movie"
+              aria-label="Убрать из избранного"
+              onClick={() => onDeleteMovie(movie._id)} />}
       </div>
-      <NavLink to={movie.trailerLink.replace('https:', '')} target='_blank' className="movie__treiler">
-        <img className='movie__thumbnail' alt="постер фильма" src={movie.image.url ? `${movieURL}${movie.image.url}` : movie.image} />
-      </NavLink>
-    </div>
-  );
+      <a className="card__link" href={movie.trailerLink} target="_blank" rel="noreferrer">
+        <img className="card__poster" src={imagePath} alt={movie.nameRU} />
+      </a>
+    </li>
+  )
 }
 
 export default MoviesCard;

@@ -1,121 +1,107 @@
-import "./Profile.css";
-import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import Header from '../Header/Header';
-import { useFormWithValidation } from "../../utils/validate";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useContext, useEffect } from "react";
+import { useValidation } from "../../utils/useValidation";
 
-export function Profile({ loggedIn, onEditProfile, signOut, error }) {
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+
+import SubmitButton from "../SubmitButton/SubmitButton";
+
+import './Profile.css';
+
+function Profile({ onLogout, onUpdateUser, readOnly, isEditClicked, onEditUser, onDisableEditUser }) {
+  const { values, setValues, errors, isValid, setIsValid, handleChange } = useValidation();
 
   const currentUser = useContext(CurrentUserContext);
-  const { values, setValues, handleChange, errors, isValid } =
-    useFormWithValidation();
-  const [isDisabledInput, setIsDisabledInput] = useState(true);
-  const [isModifiedData, setIsModifiedData] = useState(false);
 
   useEffect(() => {
-    setValues((values) => ({
-      ...values,
-      name: currentUser.data.name,
-      email: currentUser.data.email
-    }));
-  }, [currentUser, setValues]);
-
-  function handleEditButton() {
-    setIsDisabledInput(false);
-  }
+    onDisableEditUser();
+  }, []);
 
   useEffect(() => {
-    if ((values.name !== currentUser.name || values.email !== currentUser.email) && isValid)
-      setIsModifiedData(true);
-    else
-      setIsModifiedData(false);
+    setValues(currentUser);
+  }, [currentUser]);
+
+  useEffect(() => {
+    handleCheckUser();
   }, [values]);
+
+  const handleCheckUser = () => {
+    if(values.name === currentUser.name && values.email === currentUser.email) {
+      setIsValid(false);
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isValid) {
-      setIsModifiedData(false);
-      onEditProfile({ name: values.name, email: values.email })
-        .then((err) => {
-          if (!err) {
-            setIsDisabledInput(true)
-          }
-        })
-        .finally(() => setIsModifiedData(true));
-    }
-  };
+
+    const { name, email } = values;
+
+    onUpdateUser(name, email);
+  }
 
   return (
-    <>
-      <Header loggedIn={loggedIn} />
-      <section className="main">
-        <form className="profile" onSubmit={handleSubmit}>
-          <h1 className="profile__title">Привет, {values.name}!</h1>
-          <label className="profile__input-label">Имя
-            <input
-              type="text"
-              className="profile__input profile__input_type_name"
-              name="name"
-              minLength="2"
-              maxLength="40"
-              value={values.name}
-              placeholder="Имя"
-              onChange={handleChange}
-              pattern='^[a-zA-Zа-яА-я\-]*$'
-              required
-              disabled={isDisabledInput}
-            ></input>
-          </label>
-          <span className='profile__input-error'>{errors.name}</span>
-          <label className="profile__input-label">E-mail
-            <input
-              type="email"
-              className="profile__input profile__input_type_email"
-              name="email"
-              minLength="2"
-              maxLength="30"
-              value={values.email}
-              placeholder="email"
-              onChange={handleChange}
-              pattern="^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+){1,}\.([a-zA-Z]+)$"
-              required
-              disabled={isDisabledInput}
-            ></input>
-          </label>
-          <span className='profile__input-error'>{errors.email}</span>
-          <div className="profile__footer">
-            {isDisabledInput ? (
-              <>
-                <div className="profile__footer-edit">
+    <main className="main">
+      <section className="profile">
+        <form className="profile__form" name="profile-form" onSubmit={handleSubmit} noValidate>
+          <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
+          <div className="profile__inputs">
+            <label className="profile__form-label" htmlFor="name">
+              Имя
+              <input
+                className={`profile__form-input ${errors.name ? "profile__form-input_type_error" : ""}`}
+                type="text"
+                name="name"
+                id="name"
+                minLength="2"
+                maxLength="30"
+                placeholder="Ваше имя"
+                onChange={handleChange}
+                value={values.name || ''}
+                readOnly={readOnly}
+                autoComplete="off"
+                required/>
+            </label>
+            <label className="profile__form-label" htmlFor="email">
+              E-mail
+              <input
+                className={`profile__form-input ${errors.email ? "profile__form-input_type_error" : ""}`}
+                type="email"
+                name="email"
+                id="email"
+                placeholder="example@mail.com"
+                onChange={handleChange}
+                value={values.email || ''}
+                readOnly={readOnly}
+                autoComplete="off"
+                required/>
+            </label>
+          </div>
+          <div className="profile__btns">
+            {isEditClicked
+              ?
+                <SubmitButton text="Сохранить" label="Сохранить информацию" isValid={isValid} />
+              :
+                <>
                   <button
+                    className="profile__btn hover-opacity-link"
                     type="button"
-                    className="profile__edit"
-                    onClick={handleEditButton}>
+                    aria-label="Редактировать профиль"
+                    onClick={onEditUser}>
                     Редактировать
                   </button>
-                  <Link className="profile__link" onClick={signOut} to="/">Выйти из аккаунта</Link>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="profile__footer-save">
-                  <span className={`profile__err-text ${!isValid ? "profile__err-text_active" : "profile__err-text"}`}>
-                    {error}
-                  </span>
                   <button
-                    type="submit"
-                    className="profile__save-button"
-                    onSubmit={handleSubmit}
-                    disabled={!isModifiedData}>
-                    Сохранить
+                    className="profile__btn profile__btn_type_signout hover-opacity-link"
+                    type="button"
+                    aria-label="Выйти из аккаунта"
+                    onClick={onLogout}>
+                    Выйти из аккаунта
                   </button>
-                </div>
-              </>
-            )}
+                </>
+            }
           </div>
         </form>
       </section>
-    </>
-  );
+    </main>
+  )
 }
+
+export default Profile;

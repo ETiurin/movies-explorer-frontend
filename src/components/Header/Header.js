@@ -1,45 +1,19 @@
-import { useState } from "react";
-import { useLocation, Link, NavLink } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+
+import Navigation from '../Navigation/Navigation';
+
 import './Header.css';
-import Navigation from "../Navigation/Navigation";
-import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
-function Header({ loggedIn }) {
-
-  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
-
-  const toggleBurgerMenu = () => {
-    if(isBurgerMenuOpen === false) {
-    setIsBurgerMenuOpen(true);
-    } else {
-      setIsBurgerMenuOpen(false);
-    }
-  }
+function Header({ burgerClick, isLoggedIn }) {
+  let location = useLocation();
 
   return (
-    <header
-      className="backgroundColor"
-      style={{
-        background: useLocation().pathname === "/" ? "#465dff" : "#fff",
-      }}>
-      <div className="header">
-        <Link to="/" className="header__logo-link"></Link>
-        {!loggedIn ? (<div className="header__main">
-          <NavLink to="/signup" className="header__main-link">Регистрация</NavLink>
-          <NavLink to="/signin" className="header__main-link header__main-link_active">Войти</NavLink>
-        </div>)
-          : (
-            <div className="header__container">
-              <BurgerMenu
-                isOpen={isBurgerMenuOpen}
-                onClick={toggleBurgerMenu} />
-              <Navigation isOpen={isBurgerMenuOpen}/>
-            </div>
-          )
-        }
+    <header className={location.pathname === "/" ? "header header_background_blue" : "header"}>
+      <div className="container">
+        <Navigation burgerClick={burgerClick} isLoggedIn={isLoggedIn} />
       </div>
-    </header >
-  );
+    </header>
+  )
 }
 
 export default Header;

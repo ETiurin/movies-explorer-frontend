@@ -1,77 +1,76 @@
-import './Register.css';
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useFormWithValidation } from '../../utils/validate';
+import { useValidation } from "../../utils/useValidation";
 
-export function Register({ handleRegister, error, setError }) {
-  const { values, handleChange, errors, isValid, resetForm } =
-    useFormWithValidation();
+import AuthRegForm from '../AuthRegForm/AuthRegForm';
+import InputForm from '../InputForm/InputForm';
+
+import './Register.css';
+
+function Register({ onRegister }) {
+  const { values, errors, isValid, handleChange } = useValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegister(values.name, values.email, values.password);
-  };
 
-  useEffect(() => {
-    setError("");
+    const { name, email, password } = values;
 
-    return () => {
-      resetForm();
-    }
-  }, []);
+    onRegister(name, email, password);
+  }
 
   return (
-    <section className="main">
-      <form className="form-welcome" onSubmit={handleSubmit}>
-        <Link to="/" className="form-welcome__logo"></Link>
-        <h1 className="form-welcome__title">Добро пожаловать!</h1>
-        <label className="form-welcome__input-label">Имя</label>
-        <input
-          type="text"
-          className="form-welcome__input form-welcome__input_type_name"
-          name="name"
-          minLength="2"
-          maxLength="40"
-          placeholder='Имя'
-          pattern='^[a-zA-Zа-яА-я\-]*$'
-          value={values.name}
-          onChange={handleChange}
-          required
-        ></input>
-        <span className='form-welcome__input-error'>{errors.name}</span>
-        <label className="form-welcome__input-label">E-mail</label>
-        <input
-          type="email"
-          className="form-welcome__input form-welcome__input_type_email"
-          name="email"
-          minLength="2"
-          maxLength="30"
-          placeholder='email'
-          pattern="^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+){1,}\.([a-zA-Z]+)$"
-          value={values.email}
-          onChange={handleChange}
-          required
-        ></input>
-        <span className='form-welcome__input-error'>{errors.email}</span>
-        <label className="form-welcome__input-label">Пароль</label>
-        <input
-          type="password"
-          className="form-welcome__input form-welcome__input_type_password"
-          name="password"
-          minLength="8"
-          maxLength="30"
-          placeholder="Пароль"
-          value={values.password}
-          onChange={handleChange}
-          required
-        ></input>
-        <span className='form-welcome__input-error form-welcome__input-error_type_password'>{errors.password}</span>
-        <p className="form-welcome__error-text">{error}</p>
-        <button type="submit" className="form-welcome__button" disabled={!isValid}>
-          Зарегистрироваться
-        </button>
-        <p className="form-welcome__link-text">Уже зарегистрированы? <Link className="form-welcome__link" to="/signin">Войти</Link></p>
-      </form>
-    </section>
-  );
+    <main className="main">
+      <section className="register">
+        <AuthRegForm
+          btnText="Зарегистрироваться"
+          btnLabel="Зарегистрироваться"
+          formName="register-form"
+          errors={errors}
+          isRegister={true}
+          isValid={isValid}
+          onSubmit={handleSubmit}
+          >
+          <InputForm
+            inputLabel="Имя"
+            type="text"
+            name="name"
+            id="name"
+            minLength="2"
+            maxLength="30"
+            placeholder="Ваше имя"
+            onChange={handleChange}
+            value={values.name || ''}
+            error={errors.name}
+            errorClassName="input_type_error"
+          />
+          <InputForm
+            inputLabel="E-mail"
+            type="email"
+            name="email"
+            id="email"
+            minLength="2"
+            maxLength="30"
+            placeholder="example@mail.com"
+            onChange={handleChange}
+            value={values.email || ''}
+            error={errors.email}
+            errorClassName="input_type_error"
+          />
+          <InputForm
+            inputLabel="Пароль"
+            type="password"
+            name="password"
+            id="password"
+            minLength="6"
+            maxLength="30"
+            placeholder="Ваш пароль"
+            onChange={handleChange}
+            value={values.password || ''}
+            error={errors.password}
+            errorClassName="input_type_error"
+          />
+        </AuthRegForm>
+      </section>
+    </main>
+  )
 }
+
+export default Register;

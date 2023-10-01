@@ -1,61 +1,59 @@
-import { useFormWithValidation } from '../../utils/validate';
-import "./Login.css";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useValidation } from '../../utils/useValidation';
+import AuthRegForm from '../AuthRegForm/AuthRegForm';
+import InputForm from '../InputForm/InputForm';
 
-export function Login({ handleLogin, error, setError }) {
-  const { values, handleChange, errors, isValid, resetForm } =
-    useFormWithValidation();
+import './Login.css';
+
+function Login({ onLogin }) {
+  const { values, errors, isValid, handleChange} = useValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(values.email, values.password);
-  };
 
-  useEffect(() => {
-    setError("");
+    const { email, password } = values;
 
-    return () => {
-      resetForm();
-    }
-  }, []);
+    onLogin(email, password);
+  }
 
   return (
-    <section className="authorization-form">
-      <form className="authorization-form" onSubmit={handleSubmit}>
-        <Link to="/" className="authorization-form__logo"></Link>
-        <h1 className="authorization-form__title">Рады видеть!</h1>
-        <label className="authorization-form__input-label">E-mail</label>
-        <input
-          type="email"
-          className="authorization-form__input authorization-form__input_type_email"
-          name="email"
-          minLength="2"
-          maxLength="30"
-          placeholder="email"
-          pattern="^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+){1,}\.([a-zA-Z]+)$"
-          onChange={handleChange}
-          required
-        ></input>
-        <span className='authorization-form__input-error'>{errors.email}</span>
-        <label className="authorization-form__input-label">Пароль</label>
-        <input
-          type="password"
-          className="authorization-form__input authorization-form__input_type_password"
-          name="password"
-          minLength="8"
-          maxLength="30"
-          placeholder="Пароль"
-          onChange={handleChange}
-          required
-        ></input>
-        <span className='authorization-form__input-error'>{errors.password}</span>
-        <p className="authorization-form__err-text">{error}</p>
-        <button type="submit" className="authorization-form__button" disabled={!isValid}>
-          Войти
-        </button>
-        <p className="authorization-form__link-text">Ещё не зарегистрированы? <Link className="authorization-form__link" to="/signup">Регистрация</Link></p>
-      </form>
-    </section>
-  );
+    <main className="main">
+      <section className="login">
+        <AuthRegForm
+          btnText="Войти"
+          btnLabel="Войти"
+          formName="login-form"
+          errors={errors}
+          isRegister={false}
+          isValid={isValid}
+          onSubmit={handleSubmit}>
+            <InputForm
+              inputLabel="E-mail"
+              type="email"
+              name="email"
+              id="email"
+              minLength="8"
+              maxLength="30"
+              placeholder="example@mail.com"
+              onChange={handleChange}
+              value={values.email || ''}
+              error={errors.email}
+              errorClassName="input_type_error" />
+            <InputForm
+              inputLabel="Пароль"
+              type="password"
+              name="password"
+              id="password"
+              minLength="6"
+              maxLength="30"
+              placeholder="Ваш пароль"
+              onChange={handleChange}
+              value={values.password || ''}
+              error={errors.password}
+              errorClassName="input_type_error" />
+        </AuthRegForm>
+      </section>
+    </main>
+  )
 }
+
+export default Login;

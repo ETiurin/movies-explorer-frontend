@@ -1,74 +1,82 @@
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import SearchForm from '../SearchForm/SearchForm';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import './SavedMovies.css';
 import { useState, useEffect } from 'react';
-import { shortMoviesDuration } from '../../utils/constants';
+import useResize from '../../utils/useResize';
 
-function SavedMovies({
-  savedMovies,
-  loggedIn,
-  onMovieDelete,
-}) {
+import SearchForm from '../SearchForm/SearchForm';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-  const [searchQueryInSaved, setSearchQueryInSaved] = useState("");
-  const [searchResultsInSaved, setSearchResultsInSaved] = useState([]);
-  const [searchResultsFilteredInSaved, setSearchResultsFilteredInSaved] = useState([]);
-  const [isSearchDoneInSaved, setIsSearchDoneInSaved] = useState(false);
-  const [isSearchSuccess, setIsSearchSuccess] = useState(true);
-  const [isCheckedInSaved, setIsCheckedInSaved] = useState(false);
+import './SavedMovies.css';
 
-  const handleSearchQueryChangeInSaved = (event) => {
-    const query = event.target.value;
-    console.log(query);
-    setSearchQueryInSaved(query);
-  };
+function SavedMovies({ savedMovies, onDeleteMovie, onEmptyReqMessage }) {
+  const [searchReq, setSearchReq] = useState({});
+  const [filteredMovies, setFilteredMovies] = useState([]);
 
-  function handleSearchInSaved() {
-    setIsSearchSuccess(false);
-    const results = savedMovies.filter((movie) =>
-      movie.nameRU.toLowerCase().includes(searchQueryInSaved.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchQueryInSaved.toLowerCase())
-    );
-    setSearchResultsInSaved(results);
-    setIsSearchDoneInSaved(true);
-    setIsSearchSuccess(results.length > 0);
-  };
+  let size = useResize();
 
-  const handleCheckedInSaved = () => {
-    setIsCheckedInSaved(!isCheckedInSaved);
-  }
+  const foundMovies = localStorage.getItem('foundSavedMovies');
+  const movieReq = localStorage.getItem('foundReqSavedMovies');
 
   useEffect(() => {
-    if (!isSearchDoneInSaved) {
-      if (isCheckedInSaved) {
-        setSearchResultsFilteredInSaved(savedMovies.filter((movie) => movie.duration <= shortMoviesDuration) || savedMovies.filter((movie) => movie.duration <= 40));
-      } else {
-        setSearchResultsFilteredInSaved(savedMovies);
-      }
+      localStorage.removeItem('foundReqSavedMovies');
+      localStorage.removeItem('foundSavedMovies');
+  }, []);
+
+  useEffect(() => {
+    if (foundMovies) {
+      setFilteredMovies(JSON.parse(foundMovies));
     } else {
-      if (isCheckedInSaved) {
-        setSearchResultsFilteredInSaved(searchResultsInSaved.filter((movie) => movie.duration <= shortMoviesDuration) || savedMovies.filter((movie) => movie.duration <= 40));
-      } else {
-        setSearchResultsFilteredInSaved(searchResultsInSaved);
-      }
+      setFilteredMovies(savedMovies);
     }
-  }, [savedMovies, searchResultsInSaved, isCheckedInSaved]);
+  }, [foundMovies, savedMovies, searchReq]);
+
+  useEffect(() => {
+    if (movieReq) {
+      setSearchReq(JSON.parse(movieReq));
+    } else {
+      setSearchReq({ ...movieReq, searchValue: '' });
+    }
+  }, [movieReq, savedMovies]);
+
+  function moviesFilter (req) {
+    let filtered = [];
+    localStorage.setItem('foundReqSavedMovies', JSON.stringify(req));
+
+    if (req.isShortFilm) {
+      filtered = savedMovies.filter(m => {
+        return m.duration <= 40 && m.nameRU.toLowerCase().trim().includes(req.searchValue.toLowerCase());
+      });
+
+      localStorage.setItem('foundSavedMovies', JSON.stringify(filtered));
+      setFilteredMovies(filtered);
+    } else if (!req.isShortFilm) {
+      filtered = savedMovies.filter(m => {
+        return m.nameRU.toLowerCase().trim().includes(req.searchValue.toLowerCase());
+      });
+
+      localStorage.setItem('foundSavedMovies', JSON.stringify(filtered));
+      setFilteredMovies(filtered);
+    }
+  };
 
   return (
-    <>
-      <Header loggedIn={loggedIn} />
-      <main className='movies'>
-        <SearchForm onChange={handleSearchQueryChangeInSaved} searchQuery={searchQueryInSaved} handleSearch={handleSearchInSaved}
-          isChecked={isCheckedInSaved} onCheckboxUpdated={handleCheckedInSaved} />
-        {isSearchSuccess ?
-          <MoviesCardList movies={searchResultsFilteredInSaved} savedMovie={savedMovies} onMovieDelete={onMovieDelete} />
-          : <p className='movies__not-found'>Ничего не найдено</p>
-        }
-
-      </main>
-      <Footer />
-    </>
+    <main className="main">
+      <div className={`container ${size.width <= 550 ? "container_movies-mobile" : ""}`}>
+        <SearchForm
+          searchReq={searchReq}
+          onMoviesFilter={moviesFilter}
+          onEmptyReqMessage={onEmptyReqMessage} />
+        {filteredMovies.length
+          ?
+            <MoviesCardList
+              movies={filteredMovies}
+              onDeleteMovie={onDeleteMovie} />
+          :
+            foundMovies &&
+              <p className="movies__not-found">
+                Ничего не найдено.
+              </p>}
+      </div>
+    </main>
   )
 }
+
 export default SavedMovies;
