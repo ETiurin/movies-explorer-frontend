@@ -21,6 +21,7 @@
 }
 
 .card__title {
+  max-width: 130px;
   margin: 0;
   font-weight: 500;
   font-size: 15px;
@@ -38,7 +39,7 @@
 .card__poster {
   width: 267px;
   height: 150px;
-  object-fit: fill;
+  object-fit: cover;
   transition: all .2s ease-in-out;
 }
 
