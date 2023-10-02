@@ -40,7 +40,7 @@
 }
 
 .preloader {
-  margin: auto;
+  margin: 100px 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +48,6 @@
   height: 100%;
   z-index: 10;
   padding: 20px;
-  box-sizing: border-box;
 }
 
 .preloader__container {
@@ -63,7 +62,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: #FF6838;
+  background: #f3c1f8;
   border-radius: 50px;
 }
 
@@ -85,6 +84,6 @@
 
 .preloader__round::before {
   z-index: 10;
-  background: #FF6838;
+  background: #f3c1f8;
   animation: preloader-inside-red 1s ease-in-out infinite;
 }
