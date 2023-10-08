@@ -17,13 +17,13 @@ function MoviesCardList({ movies, savedMovies, onSaveMovie, onDeleteMovie }) {
   }, [movies]);
 
   const moviesRender = useMemo(() => {
-    const count = size.width < 768 ? 5 : size.width < 1280 ? 4 : 1;
+    const count = size.width < 480 ? 5 : size.width < 1024 ? 4 : 4;
 
     return movies.slice(0, count + moviesAddCount);
   }, [movies, moviesAddCount, size.width]);
 
   const handleMoreClick = () => {
-    setMoviesAddCount(prev => prev + (size.width >= 1280 ? 4 : 1));
+    setMoviesAddCount(prev => prev + (size.width >= 768 ? 4 : size.width < 767 ? 2 : 2));
   }
 
   return (
