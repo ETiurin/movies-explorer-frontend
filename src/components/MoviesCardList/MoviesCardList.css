@@ -28,26 +28,18 @@
 @media screen and (max-width: 767px) {
   .movies-cards__list {
     grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
     gap: 36px 30px;
-  }
-}
-
-@media screen and (max-width: 550px) {
-  .movies-cards__list {
-    padding: 46px 0 30px;
-    row-gap: 16px;
-  }
-
-  .movies-cards__more {
-    padding: 50px 0 82px;
   }
 }
 
 @media screen and (max-width: 480px) {
   .movies-cards__list {
     grid-template-columns: repeat(1, 1fr);
-    justify-content: center;
-    gap: 36px 30px;
+    padding: 46px 0 30px;
+    row-gap: 16px;
+  }
+
+  .movies-cards__more {
+    padding: 50px 0 82px;
   }
 }
