@@ -7,7 +7,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 import './Movies.css';
 
-function Movies({ movies, savedMovies, onSaveMovie, onEmptyReqMessage }) {
+function Movies({ savedMovies, onSaveMovie, onEmptyReqMessage, onGetMovies }) {
   const [isLoading, setIsLoading] = useState(false);
   const [searchReq, setSearchReq] = useState({});
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -30,29 +30,26 @@ function Movies({ movies, savedMovies, onSaveMovie, onEmptyReqMessage }) {
   }, [foundMovies]);
 
   const handleFilterMovie = (req) => {
-    if (!filteredMovies.length) {
-      setIsLoading(true);
-    }
+    onGetMovies(setIsLoading).then((movies) => {
+      let filtered = [];
+      localStorage.setItem('foundReqMovies', JSON.stringify(req));
 
-    let filtered = [];
-    localStorage.setItem('foundReqMovies', JSON.stringify(req));
+      if (req.isShortFilm && !!req.searchValue) {
+        filtered = movies.filter(m => {
+          return m.duration <= 40 && m.nameRU.toLowerCase().trim().includes(req.searchValue.toLowerCase());
+        });
 
-    if (req.isShortFilm && !!req.searchValue) {
-      filtered = movies.filter(m => {
-        return m.duration <= 40 && m.nameRU.toLowerCase().trim().includes(req.searchValue.toLowerCase());
-      });
+        localStorage.setItem('foundMovies', JSON.stringify(filtered));
+        setFilteredMovies(filtered);
+      } else if (!req.isShortFilm && !!req.searchValue) {
+        filtered = movies.filter(m => {
+          return m.nameRU.toLowerCase().trim().includes(req.searchValue.toLowerCase());
+        });
 
-      localStorage.setItem('foundMovies', JSON.stringify(filtered));
-      setFilteredMovies(filtered);
-    } else if (!req.isShortFilm && !!req.searchValue) {
-      filtered = movies.filter(m => {
-        return m.nameRU.toLowerCase().trim().includes(req.searchValue.toLowerCase());
-      });
-
-      localStorage.setItem('foundMovies', JSON.stringify(filtered));
-      setFilteredMovies(filtered);
-    }
-    setIsLoading(false);
+        localStorage.setItem('foundMovies', JSON.stringify(filtered));
+        setFilteredMovies(filtered);
+      }
+    })
   };
 
   return (

@@ -35,16 +35,17 @@ function App() {
   });
 
   const [ isBurgerOpen, setIsBurgerOpen ] = useState(false);
-  const [ isMessageOpen, setIsMessageOpen ] = useState(false);
-  const [ errorMessage, setErrorMessage ] = useState('');
-  const [ textMessage, setTextMessage ] = useState('');
-  const [ isSuccess, setIsSuccess ] = useState(false);
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [ currentUser, setCurrentUser ] = useState({});
   const [ isEditClicked, setIsEditClicked ] = useState(false);
   const [ readOnly, setReadOnly ] = useState(true);
   const [ movies, setMovies ] = useState([]);
   const [ savedMovies, setSavedMovies ] = useState([]);
+  const [messageState, setMessageState] = useState({
+    isOpen: false,
+    message: '',
+    isSuccess: true,
+  });
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -79,22 +80,6 @@ function App() {
   }, [savedMovies, isLoggedIn]);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      if (localStorage.getItem('movies')) {
-        setMovies(JSON.parse(localStorage.getItem('movies')));
-      } else {
-        moviesApi.getData()
-          .then(data => {
-            localStorage.setItem('movies', JSON.stringify(data));
-
-            setMovies(data);
-          })
-          .catch(err => console.log(err));
-      }
-    }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
     if (isBurgerOpen) {
       document.addEventListener('keydown', handleEscClose);
       document.addEventListener('mousedown', handleOverlayClose);
@@ -110,26 +95,40 @@ function App() {
 
   useEffect(() => {
     setTimeout(() => {
-      setIsMessageOpen(false);
+      if (messageState.isOpen) {
+        setMessageState({
+          ...messageState,
+          isOpen: false,
+        });
+      }
     }, 3000);
-  }, [isMessageOpen]);
+  }, [messageState.isOpen]);
+
+  const handleShowMessage = (text, isSuccess = true) => {
+    setMessageState({
+      isOpen: true,
+      text,
+      isSuccess
+    })
+  }
 
   const handleError = (err) => {
+    let errorText = '';
     if(err.includes('400')) {
-      setErrorMessage('Введены некорректные данные.');
+      errorText = 'Введены некорректные данные.';
     }
     if(err.includes('401')) {
-      setErrorMessage('Неверный логин или пароль.');
+      errorText = 'Неверный логин или пароль.';
     }
     if(err.includes('409')) {
-      setErrorMessage('Такой пользователь уже существует.');
+      errorText = 'Такой пользователь уже существует.';
     }
+
+    handleShowMessage(errorText, false);
   }
 
   const handleEmptyReqMessage = () => {
-    setIsSuccess(false);
-    setIsMessageOpen(true);
-    setErrorMessage('Нужно ввести ключевое слово.');
+    handleShowMessage('Нужно ввести ключевое слово.', false);
   }
 
   const handleRegister = (name, email, password) => {
@@ -137,12 +136,9 @@ function App() {
       .then(() => {
         handleLogin(email, password);
 
-        setIsSuccess(true);
-        setIsMessageOpen(true);
+        handleShowMessage('Вы успешно зарегистривались!')
       })
       .catch(err => {
-        setIsSuccess(false);
-        setIsMessageOpen(true);
         handleError(err);
         console.log(err)
       });
@@ -156,14 +152,10 @@ function App() {
           setIsLoggedIn(true);
           navigate('/movies', {replace: true});
 
-          setIsSuccess(true);
-          setIsMessageOpen(true);
-          setTextMessage('Вы успешно вошли!');
+          handleShowMessage('Вы успешно вошли!');
         }
       })
       .catch(err => {
-        setIsSuccess(false);
-        setIsMessageOpen(true);
         handleError(err);
         console.log(err);
       });
@@ -174,17 +166,13 @@ function App() {
       .then(() => {
         setCurrentUser({...currentUser, name, email});
 
-        setIsSuccess(true);
-        setIsMessageOpen(true);
-        setTextMessage('Профиль успешно обновлен!');
+        handleShowMessage('Профиль успешно обновлен!')
       })
       .then(() => {
         setIsEditClicked(false);
         setReadOnly(true);
       })
       .catch(err => {
-        setIsSuccess(false);
-        setIsMessageOpen(true);
         handleError(err);
         console.log(err);
       });
@@ -205,9 +193,23 @@ function App() {
     localStorage.clear();
     navigate('/', { replace: true });
 
-    setIsSuccess(true);
-    setIsMessageOpen(true);
-    setTextMessage('Вы вышли из аккаунта.');
+    handleShowMessage('Вы вышли из аккаунта');
+  }
+
+  const handleGetMovies = (setIsLoading) => {
+    if (localStorage.getItem('movies')) {
+      return Promise.resolve(JSON.parse(localStorage.getItem('movies')));
+    } else {
+      setIsLoading(true);
+      return moviesApi.getData()
+        .then(data => {
+          localStorage.setItem('movies', JSON.stringify(data));
+
+          setIsLoading(false);
+          return data;
+        })
+        .catch(err => console.log(err));
+    }
   }
 
   const handleSaveMovie = (movie, movieId, isSaved) => {
@@ -247,7 +249,10 @@ function App() {
   };
 
   const handleCloseMessage = () => {
-    setIsMessageOpen(false)
+    setMessageState({
+      ...messageState,
+      open: false,
+    })
   };
 
   const handleEscClose = (e) => {
@@ -289,7 +294,11 @@ function App() {
               movies={movies}
               savedMovies={savedMovies}
               onSaveMovie={handleSaveMovie}
-              onEmptyReqMessage={handleEmptyReqMessage} />} />
+              onEmptyReqMessage={handleEmptyReqMessage}
+              onGetMovies={handleGetMovies}
+            />
+            }
+          />
 
           <Route path="saved-movies" element={
             <ProtectedRoute
@@ -315,10 +324,9 @@ function App() {
       <BurgerMenu isOpen={isBurgerOpen} onClose={handleCloseBurger} />
 
       <Message
-        isOpen={isMessageOpen}
-        isSuccess={isSuccess}
-        text={textMessage}
-        errorText={errorMessage}
+        isOpen={messageState.isOpen}
+        isSuccess={messageState.isSuccess}
+        text={messageState.text}
         onClose={handleCloseMessage} />
 
     </CurrentUserContext.Provider>
