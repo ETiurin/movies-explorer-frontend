@@ -18,7 +18,7 @@ function MoviesCardList({ movies, savedMovies, onSaveMovie, onDeleteMovie }) {
 
   const moviesRender = useMemo(() => {
 
-    const count = size.width <= 480 ? 5 : size.width >= 1024 ? 12 : 12 ? size.width >= 1023 ? 8 : 2 : 1;
+    const count = size.width <= 480 ? 5 : size.width >= 1024 ? 12 : 12 ? size.width >= 481 ? 8 : 2 : 1;
 
     return movies.slice(0, count + moviesAddCount);
   }, [movies, moviesAddCount, size.width]);
