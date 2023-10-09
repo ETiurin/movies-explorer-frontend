@@ -35,7 +35,7 @@ function AboutMe() {
               </a>
             </li>
             <li className="about-me__portfolio-item">
-              <a className="about-me__portfolio-link hover-opacity-link" href="https://github.com/ETiurin/react-mesto-api-full-gha" target="_blank">
+              <a className="about-me__portfolio-link hover-opacity-link" href="https://https://etiurin.github.io/mesto" target="_blank">
                 Одностраничное приложение
               </a>
             </li>
