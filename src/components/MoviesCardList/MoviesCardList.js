@@ -24,7 +24,7 @@ function MoviesCardList({ movies, savedMovies, onSaveMovie, onDeleteMovie }) {
   }, [movies, moviesAddCount, size.width]);
 
   const handleMoreClick = () => {
-    setMoviesAddCount(prev => prev + (size.width <= 768 ? 2 : 2 ? size.width <= 1023 ? 2 : 3 : 1));
+    setMoviesAddCount(prev => prev + (size.width <= 480 ? 2 : 2 ? size.width <= 1023 ? 2 : 3 : 1));
   }
 
   return (
