@@ -3,6 +3,7 @@ import './Techs.css';
 function Techs() {
     return (
         <section className='techs' id="techs">
+          <div className="container">
             <div className='techs__heading'>
                 <h2 className='techs__heading-title'>Технологии</h2>
             </div>
@@ -31,6 +32,7 @@ function Techs() {
                     <p className='techs__object-text'>mongoDB</p>
                 </li>
             </ul>
+            </div>
         </section>
     );
 }

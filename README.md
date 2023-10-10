@@ -1,15 +1,25 @@
 # Проект: Movies-explorer
 
-Выполнил: Тюрин Е.Н.
+### Выполнил: Тюрин Е.Н.
 
-Дипломная работа "Movies-explorer-frontend" в рамках курса Вэб-разработчик от Яндекс.Практикума.
+* [Ссылка на Pull request](https://github.com/ETiurin/movies-explorer-frontend/pull/5)
 
-Макет light-5
+### Дипломная работа "Movies-explorer-frontend" в рамках курса Вэб-разработчик от Яндекс.Практикума.
+
+## Ссылки на проект:
 
 **Figma**
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/light-1?type=design&node-id=1-5164&mode=design&t=UPKwF2FsYFUwYk4T-0)
+* [Макет light-5 Figma](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/light-1?type=design&node-id=1-5164&mode=design&t=UPKwF2FsYFUwYk4T-0)
 
-**Ссылка на GitHub Pages**
+**Ссылки на GitHub**
 
-* [Ссылка на GitHub](https://github.com/ETiurin/movies-explorer-frontend/tree/level-2)
+* [Frontend](https://github.com/ETiurin/movies-explorer-frontend/tree/level-3)
+
+* [Backend](https://github.com/ETiurin/movies-explorer-api.git)
+
+**Ссылки на проект**
+
+* [Frontend](https://ETiurin.nomoredomainsicu.ru)
+
+* [Backend](https://api.ETiurin.nomoredomainsicu.ru)

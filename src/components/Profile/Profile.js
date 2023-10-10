@@ -1,75 +1,107 @@
-import "./Profile.css";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import Header from '../Header/Header';
+import { useContext, useEffect } from "react";
+import { useValidation } from "../../utils/useValidation";
 
-export function Profile({ handleLogin }) {
-  const [formValue, setFormValue] = useState({
-    name: "Евгений",
-    email: "Tiurin46@yandex.ru",
-  });
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  };
+import SubmitButton from "../SubmitButton/SubmitButton";
+
+import './Profile.css';
+
+function Profile({ onLogout, onUpdateUser, readOnly, isEditClicked, onEditUser, onDisableEditUser }) {
+  const { values, setValues, errors, isValid, setIsValid, handleChange } = useValidation();
+
+  const currentUser = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    onDisableEditUser();
+  }, []);
+
+  useEffect(() => {
+    setValues(currentUser);
+  }, [currentUser]);
+
+  useEffect(() => {
+    handleCheckUser();
+  }, [values]);
+
+  const handleCheckUser = () => {
+    if(values.name === currentUser.name && values.email === currentUser.email) {
+      setIsValid(false);
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(formValue.name, formValue.email)
-  };
+
+    const { name, email } = values;
+
+    onUpdateUser(name, email);
+  }
 
   return (
-    <>
-      <Header />
-      <section className="main">
-        <form className="profile" onSubmit={handleSubmit}>
-          <h1 className="profile__title">Привет, {formValue.name}!</h1>
-          <label className="profile__input-label">Имя
-            <input
-              type="text"
-              className="profile__input profile__input_type_name"
-              name="name"
-              minLength="2"
-              maxLength="40"
-              value={formValue.name}
-              placeholder="Имя"
-              onChange={handleChange}
-              required
-              disabled
-            ></input>
-          </label>
-          <label className="profile__input-label">E-mail
-            <input
-              type="email"
-              className="profile__input profile__input_type_email"
-              name="email"
-              minLength="2"
-              maxLength="30"
-              value={formValue.email}
-              placeholder="email"
-              onChange={handleChange}
-              required
-              disabled
-            ></input>
-          </label>
-          <div className="profile__footer">
-            <div className="profile__footer-edit">
-              <button type="button" className="profile__edit">Редактировать</button>
-              <Link className="profile__link" to="/">Выйти из аккаунта</Link>
-            </div>
-            <div className="profile__footer-save">
-              <span className="profile__err-text">
-                При обновлении профиля произошла ошибка.
-              </span>
-              <button type="button" className="profile__save-btn" disabled>Сохранить</button>
-            </div>
+    <main className="main">
+      <section className="profile">
+        <form className="profile__form" name="profile-form" onSubmit={handleSubmit} noValidate>
+          <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
+          <div className="profile__inputs">
+            <label className="profile__form-label" htmlFor="name">
+              Имя
+              <input
+                className={`profile__form-input ${errors.name ? "profile__form-input_type_error" : ""}`}
+                type="text"
+                name="name"
+                id="name"
+                minLength="2"
+                maxLength="30"
+                placeholder="Ваше имя"
+                onChange={handleChange}
+                value={values.name || ''}
+                readOnly={readOnly}
+                autoComplete="off"
+                required/>
+            </label>
+            <label className="profile__form-label" htmlFor="email">
+              E-mail
+              <input
+                className={`profile__form-input ${errors.email ? "profile__form-input_type_error" : ""}`}
+                type="email"
+                name="email"
+                id="email"
+                placeholder="example@mail.com"
+                onChange={handleChange}
+                value={values.email || ''}
+                readOnly={readOnly}
+                autoComplete="off"
+                required/>
+            </label>
+          </div>
+          <div className="profile__btns">
+            {isEditClicked
+              ?
+                <SubmitButton text="Сохранить" label="Сохранить информацию" isValid={isValid} />
+              :
+                <>
+                  <button
+                    className="profile__btn hover-opacity-link"
+                    type="button"
+                    aria-label="Редактировать профиль"
+                    onClick={onEditUser}>
+                    Редактировать
+                  </button>
+                  <button
+                    className="profile__btn profile__btn_type_signout hover-opacity-link"
+                    type="button"
+                    aria-label="Выйти из аккаунта"
+                    onClick={onLogout}>
+                    Выйти из аккаунта
+                  </button>
+                </>
+            }
           </div>
         </form>
       </section>
-    </>
-  );
+    </main>
+  )
 }
+
+export default Profile;

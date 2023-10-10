@@ -1,43 +1,54 @@
 .footer {
-  max-width: calc(100% - 70px * 2);
-  margin: 0 auto;
-  min-height: 172px;
-  display: flex;
-  flex-direction: column;
-  background-color: #FAFAFA;
+  flex-shrink: 0;
+  padding: 79px 0 20px;
+  background-color: #fafafa;
 }
 
 .footer__container {
-  display: flex;
-  justify-content: space-between;
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1280px;
+  padding: 0 70px;
+  width: 100%;
 }
 
 .footer__title {
+  border-bottom: 1px solid #e8e8e8;
   color: #a0a0a0;
-  text-align: center;
   font-size: 13px;
-  line-height: 15.73px;
   font-weight: 400;
-  margin: 79px auto 41px;
+  line-height: 16px;
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+}
+
+.footer__info {
+  margin: 20px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .footer__year {
   font-size: 13px;
-  line-height: 15.73px;
-  margin: 0 0 20px;
+  font-weight: 400;
+  line-height: 16px;
+  margin: 0;
 }
 
 .footer__items {
+  margin: 0;
+  padding: 0;
   display: flex;
   gap: 20px;
   list-style: none;
-  padding: 0;
-  margin: 0 0 20px;
 }
 
 .footer__link {
+  font-weight: 400;
   font-size: 13px;
-  line-height: 15.73px;
+  line-height: 16px;
   text-decoration: none;
   color: #000;
   transition: opacity .3s ease-in-out;
@@ -47,46 +58,55 @@
   opacity: 0.7;
 }
 
-@media screen and (max-width: 805px) {
+@media screen and (max-width: 768px) {
   .footer {
-    background-color: #fff;
-    max-width: calc(100% - 30px * 2);
+    background-color: transparent;
   }
 
-  .footer__title {
-    margin: 79px auto 39px;
+  .footer__container {
+    padding: 0 30px;
+  }
+
+  .footer__info {
+    margin: 18px 0 0;
   }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 460px) {
   .footer {
-    max-width: calc(100% - 10px * 2);
-    min-height: 253px;
+    padding: 79px 0px 20px;
+  }
+
+  .footer__container {
+    padding: 0 14px;
   }
 
   .footer__title {
     font-size: 12px;
-    margin: 82px auto 49px;
+    line-height: 15px;
   }
 
-  .footer__container {
-    flex-direction: column-reverse;
-    align-items: center;
+  .footer__info {
+    margin: 27px 0 0;
+    flex-direction: column;
+    row-gap: 30px;
   }
 
   .footer__year {
     font-size: 12px;
-    color: #A0A0A0;
+    line-height: 15px;
+    color: #a0a0a0;
   }
 
   .footer__items {
+    gap: 8px;
+    text-align: center;
     flex-direction: column;
-    align-items: center;
-    gap: 9px;
-    margin: 0 0 30px;
+    order: -1;
   }
 
   .footer__link {
     font-size: 12px;
+    line-height: 15px;
   }
 }
