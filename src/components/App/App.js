@@ -284,8 +284,20 @@ function App() {
       <Routes>
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Main />} />
-          <Route path="signup" element={<Register onRegister={handleRegister} />} />
-          <Route path="signin" element={<Login onLogin={handleLogin} />} />
+          <Route path="signup" element={
+            <ProtectedRoute
+              isLoggedIn={!isLoggedIn}
+              element={Register}
+              onRegister={handleRegister}
+            />}
+          />
+          <Route path="signin" element={
+            <ProtectedRoute
+              isLoggedIn={!isLoggedIn}
+              element={Login}
+              onLogin={handleLogin}
+            />}
+          />
 
           <Route path="movies" element={
             <ProtectedRoute

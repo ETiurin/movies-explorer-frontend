@@ -67,6 +67,7 @@ function SavedMovies({ savedMovies, onDeleteMovie, onEmptyReqMessage }) {
         {filteredMovies.length
           ?
             <MoviesCardList
+              showAll
               movies={filteredMovies}
               onDeleteMovie={onDeleteMovie} />
           :
